@@ -1,4 +1,5 @@
 class SDES
+
   s0 = []
   s1 = []
   pw = []
@@ -18,6 +19,16 @@ class SDES
     tab1.push(tab2[4])
     tab1.push(tab2[9])
     tab1.push(tab2[8])
+  end
+  def p4w8 t22, t2
+    t22.push(t2[3])
+    t22.push(t2[0])
+    t22.push(t2[1])
+    t22.push(t2[2])
+    t22.push(t2[1])
+    t22.push(t2[2])
+    t22.push(t2[3])
+    t22.push(t2[0])
   end
   def perm tab1, tab2
     tab2.push(tab1[2])
@@ -48,114 +59,7 @@ class SDES
   pw.push(w[4])
   pw.push(w[6])
   end
-  def sbox1 tab , s0
-    puts case tab
-           when "[0, 0, 0, 0]"
-             s0.push(0)
-             s0.push(1)
-           when "[0, 0, 1, 0]"
-             s0.push(0)
-             s0.push(0)
-           when "[0, 1, 0, 0]"
-             s0.push(1)
-             s0.push(1)
-           when "[0, 1, 1, 0]"
-             s0.push(1)
-             s0.push(0)
-           when "[0, 0, 0, 1]"
-             s0.push(1)
-             s0.push(1)
-           when "[0, 0, 1, 1]"
-             s0.push(1)
-             s0.push(0)
-           when "[0, 1, 0, 1]"
-             s0.push(0)
-             s0.push(1)
-           when "[0, 1, 1, 1]"
-             s0.push(0)
-             s0.push(0)
-           when "[1, 0, 0, 0]"
-             s0.push(0)
-             s0.push(0)
-           when "[1, 0, 1, 0]"
-             s0.push(0)
-             s0.push(1)
-           when "[1, 1, 0, 0]"
-             s0.push(0)
-             s0.push(1)
-           when "[1, 1, 1, 0]"
-             s0.push(1)
-             s0.push(1)
-           when "[1, 0, 0, 1]"
-             s0.push(1)
-             s0.push(1)
-           when "[1, 0, 1, 1]"
-             s0.push(0)
-             s0.push(1)
-           when "[1, 1, 0, 1]"
-             s0.push(1)
-             s0.push(1)
-           when "[1, 1, 1, 1]"
-             s0.push(1)
-             s0.push(0)
-           else
-             puts "ni ma"
-         end
-  end
-  def sbox2 tab , s0
-    puts case tab
-           when "[0, 0, 0, 0]"
-             s0.push(0)
-             s0.push(0)
-           when "[0, 0, 0, 1]"
-             s0.push(1)
-             s0.push(0)
-           when "[0, 0, 1, 0]"
-             s0.push(0)
-             s0.push(1)
-           when "[0, 0, 1, 1]"
-             s0.push(0)
-             s0.push(0)
-           when "[0, 1, 0, 0]"
-             s0.push(1)
-             s0.push(0)
-           when "[0, 1, 0, 1]"
-             s0.push(0)
-             s0.push(1)
-           when "[0, 1, 1, 0]"
-             s0.push(1)
-             s0.push(1)
-           when "[0, 1, 1, 1]"
-             s0.push(1)
-             s0.push(1)
-           when "[1, 0, 0, 0]"
-             s0.push(1)
-             s0.push(1)
-           when "[1, 0, 0, 1]"
-             s0.push(1)
-             s0.push(0)
-           when "[1, 0, 1, 0]"
-             s0.push(0)
-             s0.push(0)
-           when "[1, 0, 1, 1]"
-             s0.push(0)
-             s0.push(1)
-           when "[1, 1, 0, 0]"
-             s0.push(0)
-             s0.push(1)
-           when "[1, 1, 0, 1]"
-             s0.push(0)
-             s0.push(0)
-           when "[1, 1, 1, 0]"
-             s0.push(0)
-             s0.push(0)
-           when "[1, 1, 1, 1]"
-             s0.push(1)
-             s0.push(1)
-           else
-             puts "ni ma"
-         end
-  end
+
   f = SDES.new
   #puts w.inspect
   kp= [1,1,0,0,0,0,0,0,1,1]
@@ -208,26 +112,16 @@ class SDES
   puts "Pierwsza polowa tekstu #{t1.inspect}"
   puts "Druga polowa tekstu #{t2.inspect}"
 
-  t21 = []
   t22 = []
+  f.p4w8 t22, t2
 
-  t22.push(t2[3])
-  t22.push(t2[0])
-  t22.push(t2[1])
-  t22.push(t2[2])
-  t22.push(t2[1])
-  t22.push(t2[2])
-  t22.push(t2[3])
-  t22.push(t2[0])
-
-  puts "Pierwsza permutacja P4W10 na t : #{t22.inspect}"
+  puts "Pierwsza permutacja P4W8 na t : #{t22.inspect}"
   xor = [0..7]
   puts t22.inspect
-  puts k1.inspect
+  puts "Po operacji P4W8: #{k1.inspect}"
+
   for i in 0..7
-
     xor[i] = (t22[i].to_i+k1[i].to_i)
-
   end
 
   puts "Xor1 : #{xor.inspect}"
@@ -246,7 +140,13 @@ class SDES
     xor3[i]=(t[i].to_i+p4[i].to_i)%2
   end
   xortp4= xor3[0..3]+w[3..6]
-  puts xortp4.inspect
+  puts "po polaczeniu, wynik zasadniczej procedury szydfrujacej #{xortp4.inspect}"
   f.pw w, pw
   puts "PW: #{pw.inspect}"
+  p1 = k1[4..7]+pw[4..7]
+  puts p1.inspect
+  p2 = p1[4..7]+p1[0..3]
+  puts p2.inspect
+  p3 = k2[4..7]+p2[4..7]
+  puts p3.inspect
 end

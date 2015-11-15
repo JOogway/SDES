@@ -1,4 +1,5 @@
 class Perms
+
   def p10w8 tab1, tab2
     tab1.push(tab2[5])
     tab1.push(tab2[2])
@@ -38,6 +39,7 @@ class Perms
     p4.push(tab2[0])
     p4.push(tab1[0])
   end
+
   def pw w, pw
     pw.push(w[1])
     pw.push(w[5])
@@ -59,9 +61,7 @@ class Perms
     last.push(xortpl42[7])
     last.push(xortpl42[5])
   end
-  def decode final, pw
-
-
-
+  def decode final
+    pw final,pw
   end
 end
